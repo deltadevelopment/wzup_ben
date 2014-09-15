@@ -2,6 +2,43 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  #namespace :api do  
+  #  namespace :v1 do
+  #
+      # Session Routes
+
+      post 'login' => 'sessions#create'
+      delete 'login' => 'sessions#destroy'
+
+      # User routes 
+
+      get 'user/:id' => 'users#show'
+      get 'user/:id/phonenumber' => 'users#get_users_phone_number'
+
+      post 'user/register' => 'users#create'
+
+      put 'user/:id' => 'users#update'
+
+      delete 'user/:id' => 'users#destroy' 
+
+      get 'user/:id/followers' => 'followings#get_followers'
+      get 'user/:id/followees' => 'followings#get_followees'
+
+      post 'user/:id/follow/:followee_id' => 'followings#create'      
+      delete 'user/:id/follow/:followee_id' => 'followings#destroy'      
+
+      # TEMP
+      get 'user/:id/follow/:followee_id/is_mutual' => 'followings#is_mutual'
+
+      # Status routes
+      
+      get 'status/:user_id' => 'statuses#show'
+      
+      put 'status/:user_id' => 'statuses#update'
+  #  end
+  #end
+
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
