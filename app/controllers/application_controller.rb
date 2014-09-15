@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
   # Authorization
 
   def check_session
-    @session = Session.find_by_auth_token(params[:auth_token])
+    @session = Session.find_by_auth_token(params[:api_key])
 
     unless @session
       not_authorized 
