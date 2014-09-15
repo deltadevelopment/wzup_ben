@@ -1,14 +1,31 @@
 source 'https://rubygems.org'
+ruby '2.1.2'
 
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
+
 
 gem 'rails-api'
 
-gem 'spring', :group => :development
+gem 'bcrypt' # For general encryption
+gem 'active_model_serializers' # For JSON generation
 
-gem 'sqlite3'
+# Use sqlite3 as the database for Active Record
+gem 'pg'
 
+# Heroku specific
+gem 'rails_12factor', group: :production
 
+group :development, :test do
+  gem 'sqlite3'
+  gem 'rspec-rails'
+  gem 'json_spec'
+  gem 'guard-rspec', :git => 'https://github.com/guard/guard-rspec.git'
+  gem 'rb-readline', '~> 0.5.0'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'shoulda-matchers'
+  gem 'pry-rails'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
