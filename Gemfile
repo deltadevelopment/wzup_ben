@@ -8,7 +8,7 @@ gem 'rails', '4.1.4'
 gem 'rails-api'
 
 gem 'bcrypt' # For general encryption
-gem 'active_model_serializers' # For JSON generation
+gem 'active_model_serializers', '~> 0.9.0' # For JSON generation
 
 # Use sqlite3 as the database for Active Record
 gem 'pg'
