@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  # Temporary fix for https://github.com/rails-api/active_model_serializers/issues/622
+  include ActionController::Serialization
 
   # Authorization
 
