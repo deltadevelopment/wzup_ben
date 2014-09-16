@@ -1,6 +1,6 @@
 class FollowingsController < ApplicationController
 
-  before_each :check_session
+  before_filter :check_session
 
   def create
     user = User.find_by_id(params[:id])
