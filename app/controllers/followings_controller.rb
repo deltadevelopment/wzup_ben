@@ -1,37 +1,28 @@
 class FollowingsController < ApplicationController
 
+  before_each :check_session
+
   def create
     user = User.find_by_id(params[:id])
 
-    if !user
-      record_not_found 
-    else      
-      following = Following.find_or_create_by(user_id: params[:id], followee_id: params[:followee_id])
-
-      if following
-        resource_created        
-      else
-        resource_could_not_be_created
-      end
+    return not_authorized unless confirm_owner(params[:id])
+    
+    if Following.find_or_create_by(user_id: params[:id], followee_id: params[:followee_id])
+      resource_created        
+    else
+      resource_could_not_be_created
     end
   end
 
   def destroy
     user = User.find_by_id(params[:id])
 
-    if !user
-      record_not_found 
-    else      
-      following = Following.find_by_user_id_and_followee_id(params[:id], params[:followee_id])
-      if following
-        if following.destroy
-          resource_destroyed      
-        else
-          internal_server_error
-        end
-      else
-        record_not_found
-      end
+    return not_authorized unless confirm_owner(params[:id])
+    
+    if Following.find_by_user_id_and_followee_id(params[:id], params[:followee_id]).destroy
+      resource_destroyed      
+    else
+      internal_server_error
     end
   end
 
