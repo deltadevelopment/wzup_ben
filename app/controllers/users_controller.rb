@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  serialization_scope :current_user 
   # Update to include every action that requires a key present
   before_action :check_session, except: :create
  
@@ -70,31 +69,6 @@ class UsersController < ApplicationController
     end
   end
   
-  # Used in serializer
-  def current_user
-    unless auth_token = get_auth_token
-      return false
-    else
-      user = find_user_by_token(auth_token)
-    end
-  end   
-
-  def find_user_by_token(api_key)
-    token = Session.find_by_auth_token(api_key)
-    
-    if token 
-      user = User.find_by_id(token.user_id)
-      if user
-        user
-      else
-        # Is this the correct error message for this incident?
-        record_not_found
-      end
-    else
-      invalid_token 
-    end
-    
-  end
   
   # Used in SessionsController#create
   def self.authenticate(username, password)

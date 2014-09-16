@@ -7,14 +7,12 @@ class StatusSerializer < ActiveModel::Serializer
     if not_private_or_followee
       keys 
     else
-      keys - [:id]    
+      keys - [:body, :location, :availability]
     end
   end
   
   def not_private_or_followee
-    # Check if the user has a private profile, if not check first if the requestor is authenticated
-    # and then if he's a followee of the user.
-    !User.find(object.user_id).has_private_profile? or scope and scope.is_followee?(object.id)
+    !object.user.has_private_profile? or scope.is_followee?(object.id)
   end
 
 end

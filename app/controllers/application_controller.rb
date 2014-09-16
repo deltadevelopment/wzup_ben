@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
   # Temporary fix for https://github.com/rails-api/active_model_serializers/issues/622
   include ActionController::Serialization
 
+  serialization_scope :current_user
+
   # Authorization
 
   def check_session
@@ -68,6 +70,34 @@ class ApplicationController < ActionController::API
     end
 
     false 
+  end
+
+
+  # Used for serializer
+  def current_user
+    unless auth_token = get_auth_token
+      return false
+    else
+      user = find_user_by_token(auth_token)
+    end
+  end   
+
+  def find_user_by_token(api_key)
+    token = Session.find_by_auth_token(api_key)
+    
+    if token 
+      user = User.find_by_id(token.user_id)
+      if user
+        user
+      else
+      # TODO: Should this method be rendering anything??
+        # Is this the correct error message for this incident?
+        record_not_found
+      end
+    else
+      invalid_token 
+    end
+    
   end
 
 end
