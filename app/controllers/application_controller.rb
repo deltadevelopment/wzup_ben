@@ -5,19 +5,10 @@ class ApplicationController < ActionController::API
   # Authorization
 
   def check_session
-    @session = Session.find_by_auth_token(params[:api_key])
+    @session = Session.find_by_auth_token(get_auth_token)
 
     unless @session
       not_authorized 
-    end
-  end
-  
-  def check_api_key_presence
-    unless params[:api_key]
-      invalid_token
-      false
-    else
-      true
     end
   end
 
@@ -66,4 +57,17 @@ class ApplicationController < ActionController::API
   def not_authorized 
     render json: {error: "Not authorized"}.to_json, status: 403
   end
+
+  def get_auth_token
+    unless params[:auth_token].blank?
+      return params[:auth_token]
+    end
+
+    unless request.headers['X-AUTH-TOKEN'].blank?
+      return request.headers['X-AUTH-TOKEN']
+    end
+
+    false 
+  end
+
 end

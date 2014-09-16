@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
 
   # Delete auth token from session store
   def destroy
-    session = Session.find_by_auth_token(params[:auth_token])    
+    session = Session.find_by_auth_token(get_auth_token)    
     
     if session 
       if session.destroy

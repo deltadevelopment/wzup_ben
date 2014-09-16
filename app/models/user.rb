@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
 
-  # TODO: Add regex validation; first char can't be numeric  
   validates :username, length: { in: 4..15, message: "must be between 4 and 15 characters" }
+  validates :username, uniqueness: true
 
   validates :display_name, length: { in: 4..25, message: "must be between 4 and 25 characters" }
   
@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   # TODO: Get better regex for email validation
   validates_format_of :email, 
     :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates :email, uniqueness: true
 
   validates :phone_number, numericality: {message: "can only contain digits"},
             if: :phone_number_entered

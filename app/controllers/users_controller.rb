@@ -1,15 +1,9 @@
 class UsersController < ApplicationController
   serialization_scope :current_user 
   # Update to include every action that requires a key present
-  before_action :check_api_key_presence, except: [:show, :create]
-
-  # TODO: Authentication / Authorization
-  before_action :check_session, only: [:update]
+  before_action :check_session, except: :create
  
-  # Needs to be changed to only include the fields that are supposed to be returned 
   def show
-    #@user = User.where(:id => params[:id]).select('id', 'username', 'display_name', 'availability', 'private_profile')
-    
     @user = User.find(params[:id])
     
     # Unsure if this clause works
@@ -56,35 +50,6 @@ class UsersController < ApplicationController
 
   end
 
-  def get_users_phone_number
-    @user = User.find_by_id(params[:id])
-    requester = User.find_user_by_token(params[:auth_token])
-    
-    if !@user
-      record_not_found
-    else
-      if @user.is_follower(requester)
-        render json: @user 
-      else
-        not_authorized
-      end
-    end
-  end
-
-  # TODO: Possibly remove this feature
-  def get_user_email
-    @user = User.find_by(:id => params[:id]).select('id', 'email')
-    
-    if !@user
-      record_not_found
-    else
-      if @user.is_follower
-        render json: @user 
-      else
-        user_is_private
-      end
-    end
-  end
 
   def destroy
     @user = User.find_by_id(params[:id])
@@ -104,14 +69,13 @@ class UsersController < ApplicationController
       record_not_found 
     end
   end
-
+  
+  # Used in serializer
   def current_user
-    api_key = params[:api_key]
-
-    if api_key.nil?
+    unless auth_token = get_auth_token
       return false
     else
-      user = find_user_by_token(api_key)
+      user = find_user_by_token(auth_token)
     end
   end   
 
@@ -131,7 +95,8 @@ class UsersController < ApplicationController
     end
     
   end
-
+  
+  # Used in SessionsController#create
   def self.authenticate(username, password)
    
     user = User.find_by_username(username)
@@ -144,8 +109,6 @@ class UsersController < ApplicationController
     end
 
   end
-
-  
 
   private  
   
