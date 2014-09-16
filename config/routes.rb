@@ -13,7 +13,6 @@ Rails.application.routes.draw do
       # User routes 
 
       get 'user/:id' => 'users#show'
-      get 'user/:id/phonenumber' => 'users#get_users_phone_number'
 
       post 'user/register' => 'users#create'
 
@@ -26,10 +25,7 @@ Rails.application.routes.draw do
 
       post 'user/:id/follow/:followee_id' => 'followings#create'      
       delete 'user/:id/follow/:followee_id' => 'followings#destroy'      
-
-      # TEMP
-      get 'user/:id/follow/:followee_id/is_mutual' => 'followings#is_mutual'
-
+      
       # Status routes
       
       get 'status/:user_id' => 'statuses#show'

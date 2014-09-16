@@ -11,6 +11,7 @@ class UserSerializer < ActiveModel::Serializer
     if not_private_or_followee
       data[:display_name] = object.display_name
       data[:availability] = object.availability
+      data[:phone_number] = object.phone_number
     end
 
     data

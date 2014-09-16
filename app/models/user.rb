@@ -31,12 +31,6 @@ class User < ActiveRecord::Base
   validates :phone_number, numericality: {message: "can only contain digits"},
             if: :phone_number_entered
 
-  # Should maybe be refactored with is_followee? they both to the same, the
-  # question is which name describes it better.
-  def is_follower(user_id)
-    following = Following.find_by_user_id_and_followee_id(user_id, self.id)
-  end
-
   def is_followee?(followee_id)
     Following.find_by_user_id_and_followee_id(followee_id, self.id)
   end
