@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
     
     if session 
       if session.destroy
-        render json: {sucess: "User was logged out"}.to_json, status: 200
+        render json: {success: "User was logged out"}.to_json, status: 200
       else
         render json: {error: "User could not be logged out."}.to_json, status: 500
       end
