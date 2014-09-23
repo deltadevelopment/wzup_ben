@@ -92,7 +92,7 @@ class UsersController < ApplicationController
   end
 
   def register_params 
-    params.require(:user).permit(:username, :email, :phone_number, :display_name, :password)
+    params.require(:user).permit(:username, :email, :phone_number, :display_name, :password, :private_profile)
   end
 
   def update_params 

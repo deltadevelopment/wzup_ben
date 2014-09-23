@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
   # TODO: Add more demands to password complexity ?
   #       but consider who the users are when upping complexity
   # TODO: Add password confirmation
-  validates :password, length: { in: 6..20, message: "must be between 6 and 20 characters" }
+  validates :password, length: { in: 6..20, message: "must be between 6 and 20 characters" },
+            if: :password_entered
   
   # validates :email, presence: true, uniqueness: true
 
@@ -28,8 +29,10 @@ class User < ActiveRecord::Base
     :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates :email, uniqueness: true
 
-  validates :phone_number, numericality: {message: "can only contain digits"},
+  validates :phone_number, numericality: {message: "can only contain digits"}, uniqueness: true,
             if: :phone_number_entered
+
+
 
   def is_followee?(followee_id)
     Following.find_by_user_id_and_followee_id(followee_id, self.id)
@@ -49,6 +52,10 @@ class User < ActiveRecord::Base
   # Returns true if an e-mail adress was entered 
   def email_entered
     !email.nil?  
+  end
+
+  def password_entered
+    !password.nil?
   end
 
   def encrypt_password
