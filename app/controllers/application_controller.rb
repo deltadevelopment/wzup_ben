@@ -8,41 +8,21 @@ class ApplicationController < ActionController::API
 
   def check_session
     @session = Session.find_by_auth_token(get_auth_token)
-
-    return not_authorized unless @session
+    return not_authorized unless session
   end
 
   # Used for serializer
+  # Needs check_session to be called in beforehand
   def current_user
-    unless auth_token = get_auth_token
-      return false
-    else
-      user = find_user_by_token(auth_token)
-    end
+    @user = User.find(@session.user_id)
   end   
 
-  def find_user_by_token(api_key)
-    token = Session.find_by_auth_token(api_key)
-    
-    if token 
-      user = User.find_by_id(token.user_id)
-      if user
-        user
-      else
-      # TODO: Should this method be rendering anything??
-        # Is this the correct error message for this incident?
-        record_not_found
-      end
-    else
-      invalid_token 
+  # TODO: Not currentl being used, might need to be rewritten
+  def confirm_owner(resource)
+    if current_user 
+      current_user == resource.user 
     end
-    
-  end
 
-  def confirm_owner(resource_owner_id)
-    unless @session
-      @session.user_id == resource_owner_id
-    end
     false
   end
 
