@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
 
   def check_session
     @session = Session.find_by_auth_token(get_auth_token)
-    return not_authorized unless session
+    return not_authorized unless @session
   end
 
   # Used for serializer
