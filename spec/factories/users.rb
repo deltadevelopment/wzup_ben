@@ -8,6 +8,8 @@ FactoryGirl.define do
     password 'jdoes123'
     password_salt '$2a$10$T.pUcjOLR/MKmE8PfNTrsu'
     password_hash '$2a$10$T.pUcjOLR/MKmE8PfNTrsu2RPVq7U7az1ve31.fsXYQiP1nF3tsSq'     
+    private_profile true
+
+    session { create(:session) }
   end
 end
-

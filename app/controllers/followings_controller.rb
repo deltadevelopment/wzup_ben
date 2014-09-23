@@ -5,7 +5,6 @@ class FollowingsController < ApplicationController
   def create
     user = User.find_by_id(params[:id])
     followee = User.find_by_id(params[:followee_id])
-
     return not_authorized unless current_user == user
     
     if Following.find_or_create_by(user_id: params[:id], followee_id: followee.id) 
