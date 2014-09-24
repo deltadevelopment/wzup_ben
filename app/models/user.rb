@@ -42,6 +42,10 @@ class User < ActiveRecord::Base
     private_profile
   end
 
+  def is_owner?(requester)
+    self === requester
+  end
+
   protected
 
   # Returns true if a phone number was entered

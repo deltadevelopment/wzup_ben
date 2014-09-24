@@ -1,25 +1,21 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :private_profile
+  attributes :id, :username, :private_profile, :display_name, :availability, :phone_number
   
   # TODO: Should the status be included with the JSON for the user?
-  # There is an issue with not displaying it if the user is private, as well. 
   # has_one :status
 
-  def attributes
-    data = super
-    
-    if not_private_or_followee
-      data[:display_name] = object.display_name
-      data[:availability] = object.availability
-      data[:phone_number] = object.phone_number
+  def filter(keys)
+    if owner_or_followee 
+      keys 
+    elsif !object.has_private_profile? 
+      keys - [:phone_number, :availability]  
+    else
+      keys - [:phone_number, :availability, :display_name]
     end
-
-    data
-    
   end
-  
-  def not_private_or_followee
-    !object.has_private_profile? or scope.is_followee?(object.id)
+
+  def owner_or_followee
+    scope.is_followee?(object.id) or scope.is_owner?(object)
   end
 
 end
