@@ -11,19 +11,17 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
 
-  validates :username, length: { in: 4..15, message: "must be between 4 and 15 characters" }
+  validates :username, length: { in: 1..15, message: "must be between 1 and 15 characters" }
   validates :username, uniqueness: true
 
-  validates :display_name, length: { in: 4..25, message: "must be between 4 and 25 characters" }
+  validates :display_name, length: { in: 4..25, message: "must be between 4 and 25 characters" }, if: :display_name_entered
   
-  # TODO: Add more demands to password complexity ?
-  #       but consider who the users are when upping complexity
-  # TODO: Add password confirmation
-  validates :password, length: { in: 6..20, message: "must be between 6 and 20 characters" },
-            if: :password_entered
+  validates :password, length: { in: 6..20, message: "must be between 6 and 20 characters" }, on: :create
   
-  # validates :email, presence: true, uniqueness: true
-
+  # This is for other actions than on: :create 
+  # TODO: This might be redundant
+  validates :password, length: { in: 6..20, message: "must be between 6 and 20 characters" }, if: :password_entered
+  
   # TODO: Get better regex for email validation
   validates_format_of :email, 
     :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
@@ -60,6 +58,10 @@ class User < ActiveRecord::Base
 
   def password_entered
     !password.nil?
+  end
+
+  def display_name_entered
+    !display_name.nil?
   end
 
   def encrypt_password
