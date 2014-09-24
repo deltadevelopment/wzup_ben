@@ -51,21 +51,17 @@ class UsersController < ApplicationController
 
 
   def destroy
-    @user = User.find_by_id(params[:id])
+    user = User.find_by_id(params[:id])
 
-    @status = StatusesController.new
+    return not_authorized unless current_user == user
 
-    if @user
-      user_id = @user.id
-      if @user.destroy
-        @status.destroy(user_id)
-        render json: {success: "User deleted"}.to_json
-      else
-        # TODO: Should be logged
-        render json: {error: "Could not delete user"}.to_json, status: 500
-      end
+    status = Status.find_by_user_id(user.id) 
+
+    if user.destroy
+      render json: {success: "User deleted"}.to_json
     else
-      record_not_found 
+      # TODO: Should be logged
+      render json: {error: "Could not delete user"}.to_json, status: 500
     end
   end
   

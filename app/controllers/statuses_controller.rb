@@ -39,14 +39,6 @@ class StatusesController < ApplicationController
 
   end
 
-  # TODO: Should probably do some checking as to whether
-  #       it actually happens, and get returned
-  def destroy(user_id)
-    @status = Status.find_by(:user_id => user_id)
-
-    @status.destroy
-  end
-
   private
 
   def update_params
