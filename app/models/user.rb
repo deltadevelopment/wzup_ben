@@ -32,8 +32,8 @@ class User < ActiveRecord::Base
 
 
   # TODO: Should this be rewritten using .find and rescue AR?
-  def is_followee?(followee_id)
-    following = Following.where(followee_id: self.id, user_id: followee_id)
+  def is_follower?(followee_id)
+    following = Following.where(user_id: self.id, followee_id: followee_id)
     return true unless following.empty?
     false 
   end
@@ -46,8 +46,8 @@ class User < ActiveRecord::Base
     self === requester
   end
 
-  def is_followee_or_owner?(resource)
-    is_owner?(resource) or is_followee?(resource.id)
+  def is_follower_or_owner?(resource)
+    is_owner?(resource) or is_follower?(resource.id)  
   end
 
   protected

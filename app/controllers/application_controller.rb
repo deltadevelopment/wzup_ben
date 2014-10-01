@@ -31,6 +31,10 @@ class ApplicationController < ActionController::API
   def user_is_private
     render json: {error: "User has a private profile", code: "private_profile"}, status: 403 
   end
+
+  def request_created
+    render json: {success: "Request created"}, status: 200
+  end
   
   def invalid_token 
     render json: {error: "Invalid token", code: "invalid_token"}, status: 403 

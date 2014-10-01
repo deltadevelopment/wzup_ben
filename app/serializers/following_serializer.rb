@@ -1,4 +1,4 @@
-class FollowingSerializer < ActiveModel::Serializer
+class FollowingSerializer < ApplicationSerializer 
 
   # TODO: Is the user being cached between requests, or are we performing a new lookup for object.user for every request?
   # TODO: Include some link to profile image?
@@ -19,7 +19,4 @@ class FollowingSerializer < ActiveModel::Serializer
     data
   end
 
-  def owner_or_followee
-    scope.is_followee?(object.user.id) or scope.is_owner?(object)
-  end
 end
