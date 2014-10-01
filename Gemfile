@@ -26,6 +26,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'rubocop'
 end
 
 # To use ActiveModel has_secure_password
