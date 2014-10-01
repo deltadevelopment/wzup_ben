@@ -31,9 +31,11 @@ class User < ActiveRecord::Base
             if: :phone_number_entered
 
 
-
+  # TODO: Should this be rewritten using .find and rescue AR?
   def is_followee?(followee_id)
-    Following.find_by_user_id_and_followee_id(followee_id, self.id)
+    following = Following.where(followee_id: self.id, user_id: followee_id)
+    return true unless following.empty?
+    false 
   end
 
   def has_private_profile?
@@ -42,6 +44,10 @@ class User < ActiveRecord::Base
 
   def is_owner?(requester)
     self === requester
+  end
+
+  def is_followee_or_owner?(resource)
+    is_owner?(resource) or is_followee?(resource.id)
   end
 
   protected

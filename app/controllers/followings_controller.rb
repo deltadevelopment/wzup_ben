@@ -1,5 +1,4 @@
 class FollowingsController < ApplicationController
-
   before_filter :check_session
 
   def create
@@ -15,39 +14,32 @@ class FollowingsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by_id(params[:id])
-
     return not_authorized unless confirm_owner(params[:id])
     
     if Following.find_by_user_id_and_followee_id(params[:id], params[:followee_id]).destroy
       resource_destroyed      
     else
+      # TODO: Log this?
       internal_server_error
     end
   end
 
   def get_followers
-    # Refactor out instance variables?
-
     following = Following.where(followee_id: params[:id])
 
-    if following.empty? or !following
-      record_not_found
-    else
-      render json: following, status: 200
-    end
+    return record_not_found unless following.exists?
+    return not_authorized unless current_user.is_followee_or_owner?(following[0].user)
+
+    render json: following, status: 200
   end
 
   def get_followees
-    # Refactor out instance variables?
+    following = Following.where(user_id: params[:id])
 
-    following = Following.where(user_id: params[:id]).load
+    return record_not_found unless following.exists?
+    return not_authorized unless current_user.is_followee_or_owner?(following[0].user)
 
-    if following.empty? or !following
-      record_not_found
-    else
-      render json: following, status: 200
-    end
+    render json: following, status: 200
   end
 
 end
