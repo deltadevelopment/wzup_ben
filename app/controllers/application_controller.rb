@@ -25,10 +25,6 @@ class ApplicationController < ActionController::API
 
     false
   end
-
-  def public_owner_or_followee(user_id)
-     
-  end
   
   # Error Messages
   
