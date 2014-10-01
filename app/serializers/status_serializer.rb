@@ -1,4 +1,4 @@
-class StatusSerializer < ApplicationSerializer
+class StatusSerializer < ActiveModel::Serializer
   attributes :id, :body, :location, :user_id
 
   has_one :user

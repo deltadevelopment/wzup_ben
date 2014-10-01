@@ -1,4 +1,4 @@
-class FollowingSerializer < ApplicationSerializer 
+class FollowingSerializer < ActiveModel::Serializer 
 
   # TODO: Is the user being cached between requests, or are we performing a new lookup for object.user for every request?
   # TODO: Include some link to profile image?
