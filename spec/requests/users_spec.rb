@@ -56,7 +56,7 @@ RSpec.describe "Users", :type => :request do
         end 
       end
 
-      context "user is public" do
+      context "user has a public profile" do 
         it "should return full json body, except phone number and availiability" do
           user1.update_attributes(private_profile: false)
 
