@@ -38,6 +38,12 @@ class User < ActiveRecord::Base
     false 
   end
 
+  def is_followee?(follower_id)
+    following = Following.where(user_id: follower_id, followee_id: self.id)
+    return true unless following.empty?
+    false
+  end
+
   def has_private_profile?
     private_profile
   end

@@ -20,7 +20,7 @@ class FollowingSerializer < ActiveModel::Serializer
   end
 
   def owner_or_follower
-    scope.is_follower?(object.id) or scope.is_owner?(object.user)
+    scope.is_follower?(object.followee.id) or scope.is_followee?(object.user) or scope.is_owner?(object.user)
   end
 
 end
