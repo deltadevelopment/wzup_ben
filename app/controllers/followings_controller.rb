@@ -41,18 +41,21 @@ class FollowingsController < ApplicationController
 
   def get_followers
     following = Following.where(followee_id: params[:id])
-    return record_not_found unless following.exists?
-    return not_authorized unless current_user.is_follower_or_owner?(following[0].followee)
+    followee = following[0].followee
 
-    render json: following, status: 200
+    return record_not_found unless following.exists?
+    return not_authorized unless current_user.is_follower_or_owner?(followee) or !followee.has_private_profile?
+
+    render json: following, status: 200, each_serializer: FollowerSerializer
   end
 
   def get_followees
     following = Following.where(user_id: params[:id])
+    user = following[0].user
 
     return record_not_found unless following.exists?
-    return not_authorized unless current_user.is_follower_or_owner?(following[0].user)
-    render json: following, status: 200
+    return not_authorized unless current_user.is_follower_or_owner?(user) or !user.has_private_profile?
+    render json: following, status: 200, each_serializer: FolloweeSerializer
   end
 
   private
