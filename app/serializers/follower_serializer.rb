@@ -9,9 +9,6 @@ class FollowerSerializer < ActiveModel::Serializer
       data[:user] = {'id' => object.user.id, 
                      'username' => object.user.username
                     }
-      data[:followee] = {'id' => object.followee.id, 
-                     'username' => object.followee.username
-                    }
     end
 
     data

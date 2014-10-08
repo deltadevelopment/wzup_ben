@@ -33,9 +33,6 @@ RSpec.describe "Followings", :type => :request do
           expected_response = {'followings' => [{
               'id' => following.id,
               'user' => {
-                'id' => following.user.id,
-                'username' => following.user.username },
-              'followee' => {
                 'id' => following.followee.id,
                 'username' => following.followee.username }
               }]
@@ -53,10 +50,7 @@ RSpec.describe "Followings", :type => :request do
               'id' => following.id,
               'user' => {
                 'id' => following.user.id,
-                'username' => following.user.username },
-              'followee' => {
-                'id' => following.followee.id,
-                'username' => following.followee.username }
+                'username' => following.user.username }
               }]
             }.to_json
 
@@ -72,9 +66,6 @@ RSpec.describe "Followings", :type => :request do
         expected_response = {'followings' => [{
             'id' => following.id,
             'user' => {
-              'id' => following.user.id,
-              'username' => following.user.username },
-            'followee' => {
               'id' => following.followee.id,
               'username' => following.followee.username }
             }]
@@ -90,10 +81,7 @@ RSpec.describe "Followings", :type => :request do
             'id' => following.id,
             'user' => {
               'id' => following.user.id,
-              'username' => following.user.username },
-            'followee' => {
-              'id' => following.followee.id,
-              'username' => following.followee.username }
+              'username' => following.user.username }
             }]
           }.to_json
 
@@ -111,9 +99,6 @@ RSpec.describe "Followings", :type => :request do
         expected_response = {'followings' => [{
             'id' => following.id,
             'user' => {
-              'id' => following.user.id,
-              'username' => following.user.username },
-            'followee' => {
               'id' => following.followee.id,
               'username' => following.followee.username }
             }]
@@ -130,10 +115,7 @@ RSpec.describe "Followings", :type => :request do
             'id' => following.id,
             'user' => {
               'id' => following.user.id,
-              'username' => following.user.username },
-            'followee' => {
-              'id' => following.followee.id,
-              'username' => following.followee.username }
+              'username' => following.user.username }
             }]
           }.to_json
 

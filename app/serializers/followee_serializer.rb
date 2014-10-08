@@ -7,10 +7,7 @@ class FolloweeSerializer < ActiveModel::Serializer
 
     if owner_or_follower or !object.user.has_private_profile?
       data[:id] = object.id
-      data[:user] = {'id' => object.user.id, 
-                     'username' => object.user.username
-                    }
-      data[:followee] = {'id' => object.followee.id, 
+      data[:user] = {'id' => object.followee.id, 
                      'username' => object.followee.username
                     }
     end
