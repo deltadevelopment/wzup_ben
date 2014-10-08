@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       session.generate_token(user.id)
       
       if user.session && user.session.update_attributes(auth_token: session.auth_token) || session.save
-        render json: {success: "User was logged in", auth_token: session.auth_token}.to_json, status: 200
+        render json: {success: "User was logged in", user_id: session.user_id, auth_token: session.auth_token}.to_json, status: 200
       else
         # TODO: Log this
         render json: {error: "Could not generate session token"}.to_json, status: 500
