@@ -4,15 +4,15 @@ class StatusSerializer < ActiveModel::Serializer
   has_one :user
 
   def filter(keys)
-    if not_private_or_followee
+    if owner_or_follower 
       keys 
     else
       keys - [:body, :location, :availability]
     end
   end
-  
-  def not_private_or_followee
-    !object.user.has_private_profile? or scope.is_followee?(object.id)
+
+  def owner_or_follower
+    scope.is_follower?(object.id) or scope.is_owner?(object.user)
   end
 
 end

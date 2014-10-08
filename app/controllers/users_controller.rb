@@ -3,48 +3,35 @@ class UsersController < ApplicationController
   before_action :check_session, except: :create
  
   def show
-    @user = User.find(params[:id])
+    user = User.find(params[:id])
     
-    # Unsure if this clause works
-    if !@user
-      record_not_found
-    else   
-      render json: @user
-    end
+    render json: user
   end
 
   def create
-    @user = User.new(register_params)
-    @status = StatusesController.new
+    user = User.new(register_params)
+    status = StatusesController.new
 
-    if @user.save
-      if @status.create(@user.id)
-        render json: {success: "Resource created", user: remove_unsafe_keys(@user) }.to_json, status: 201
+    if user.save
+      if status.create(user.id)
+        render json: {success: "Resource created", user: remove_unsafe_keys(user) }.to_json, status: 201
       else
         resource_could_not_be_created 
       end
     else
-      check_errors_or_500(@user)
+      check_errors_or_500(user)
     end
   end
 
   def update
+    user = User.find(params[:id])
 
-    # Check if token owner is the actual user 
-    if @session.user_id == params[:id].to_i
-      @user = User.find_by_id(params[:id])
-   
-      if !@user
-        record_not_found
-      else
-        if @user.update_attributes(update_params)
-          render json: @user, status: 200
-        else
-          check_errors_or_500(@user)
-        end
-      end
+    return not_authorized unless current_user == user 
+
+    if user.update_attributes(update_params)
+      render json: user, status: 200
     else
-      not_authorized
+      check_errors_or_500(user)
     end
 
   end

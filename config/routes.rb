@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       post 'login' => 'sessions#create'
       delete 'login' => 'sessions#destroy'
 
-      # User routes 
+      # User + Following routes
 
       get 'user/:id' => 'users#show'
 
@@ -23,8 +23,9 @@ Rails.application.routes.draw do
       get 'user/:id/followers' => 'followings#get_followers'
       get 'user/:id/followees' => 'followings#get_followees'
 
-      post 'user/:id/follow/:followee_id' => 'followings#create'      
+      post 'user/:id/follow/:followee_id' => 'followings#create_or_request'      
       delete 'user/:id/follow/:followee_id' => 'followings#destroy'      
+      post 'user/:id/accept_following/:follower_id' => 'followings#accept_following'
       
       # Status routes
       

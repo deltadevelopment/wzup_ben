@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
         render json: {success: "User was logged in", auth_token: session.auth_token}.to_json, status: 200
       else
         # TODO: Log this
-        render json: {success: "Could not generate session token"}.to_json, status: 500
+        render json: {error: "Could not generate session token"}.to_json, status: 500
       end
     else
       render json: {error: "Bad credentials"}.to_json, status: 404
