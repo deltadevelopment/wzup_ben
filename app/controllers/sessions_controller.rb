@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
         render json: {error: "Could not generate session token"}.to_json, status: 500
       end
     else
-      render json: {error: "Bad credentials"}.to_json, status: 404
+      render json: {error: "Bad credentials"}.to_json, status: 401
     end
 
   end
