@@ -1,4 +1,7 @@
 class StatusesController < ApplicationController
+  # Update to include every action that requires a key present
+  before_action :check_session, except: :create
+
 
   def show
     # TODO: Check if the user is authenticated to view the status
