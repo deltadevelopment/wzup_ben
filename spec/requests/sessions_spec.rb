@@ -11,7 +11,7 @@ RSpec.describe SessionsController, :type => :request do
    end
    it "should return success and auth token in json" do
      params = {:username => user.username, :password => user.password}
-     success = %({"success":"User was logged in"})
+     success = %({"success":"User was logged in", "user_id":#{user.id}})
 
      post '/login', params
      expect(response.body).to be_json_eql(success).excluding("auth_token")

@@ -1,6 +1,6 @@
 class StatusesController < ApplicationController
   # Update to include every action that requires a key present
-  before_action :check_session, except: :create
+  before_action :check_session
 
 
   def show

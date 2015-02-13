@@ -41,6 +41,7 @@ RSpec.describe "Users", :type => :request do
 
           # TODO: post call should be stubbed out
           post "user/#{user1.id}/follow/#{user2.id}", nil, { 'X-AUTH-TOKEN' => user1.session.auth_token}
+          # There is an issue here, is this because the relationship is not being confirmed? - Christian
           get "user/#{user1.id}", nil, { 'X-AUTH-TOKEN' => user2.session.auth_token }
 
           expect(response.body).to be_json_eql(full_user_response)
@@ -136,7 +137,7 @@ RSpec.describe "Users", :type => :request do
     
   end
 
-  describe "DELETE user/:id", focus: true do
+  describe "DELETE user/:id" do
     
     let(:user) { FactoryGirl.create(:user) }
     
