@@ -43,6 +43,18 @@ Rails.application.routes.draw do
 
       delete 'event/:id' => 'events#destroy'  
 
+      # Event Invitation routes
+
+      get 'event/:event_id/invitations' => 'invitations#list'
+
+      post 'event/:event_id/invite' => 'invitations#create'
+
+      get 'invitation/:id' => 'invitations#show'
+
+      put 'invitation/:id' => 'invitations#update'
+
+      delete 'invitation/:id' => 'invitations#destroy'
+
   #  end
   #end
 
