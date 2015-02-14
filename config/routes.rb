@@ -32,6 +32,17 @@ Rails.application.routes.draw do
       get 'status/:user_id' => 'statuses#show'
       
       put 'status/:user_id' => 'statuses#update'
+      
+      # Event routes
+      
+      get 'event/:id' => 'events#show'
+
+      post 'event' => 'events#create'
+
+      put 'event/:id' => 'events#update'  
+
+      delete 'event/:id' => 'events#destroy'  
+
   #  end
   #end
 
