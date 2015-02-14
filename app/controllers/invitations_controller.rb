@@ -5,9 +5,9 @@ class InvitationsController < ApplicationController
   def list 
     event = Event.find(params[:event_id])
 
-    return not_authorized unless current_user.is_invitee_or_owner?
+    return not_authorized unless current_user.is_invited_or_owner?(event)
 
-    invitations = Invitation.find_by_event_id(params[:event_id])
+    invitations = Invitation.where("event_id = ?", event.id)
 
     render json: invitations
   end
@@ -21,7 +21,7 @@ class InvitationsController < ApplicationController
   def create
     event = Event.find(params[:event_id])
     user = User.find(params[:invitee_id])
-    invitation = Invitation.find_or_create_by(create_params)
+    invitation = Invitation.find_or_initialize_by(create_params)
     invitation.user = current_user
 
     return not_authorized unless current_user.is_owner?(event.user)
@@ -41,7 +41,7 @@ class InvitationsController < ApplicationController
     return not_authorized unless current_user == invitation.invitee
 
     if invitation.update_attributes(update_params)
-      render json: invitation, status: 200
+      render json: {sucess: "Resource has been updated", status: 200}
     else
       check_errors_or_500(invitation)
     end
