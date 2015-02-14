@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
       get 'event/:event_id/invitations' => 'invitations#list'
 
-      post 'event/:event_id/invite' => 'invitations#create'
+      post 'event/:event_id/invite/:invitee_id' => 'invitations#create'
 
       get 'invitation/:id' => 'invitations#show'
 
