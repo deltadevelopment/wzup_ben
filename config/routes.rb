@@ -51,7 +51,7 @@ Rails.application.routes.draw do
 
       get 'invitation/:id' => 'invitations#show'
 
-      put 'invitation/:id' => 'invitations#update'
+      put 'event/:event_id/invite/:invitee_id' => 'invitations#update'
 
       delete 'invitation/:id' => 'invitations#destroy'
 
