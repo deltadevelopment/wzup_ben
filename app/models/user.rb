@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :followings
   has_many :followers, through: :followings, source: :followee, foreign_key: 'followee_id'
 
+  has_many :events
+
   before_save :encrypt_password
 
   validates :username, length: { in: 1..15, message: "must be between 1 and 15 characters" }
