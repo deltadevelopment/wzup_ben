@@ -46,6 +46,12 @@ class User < ActiveRecord::Base
     false
   end
 
+  def is_invited?(event_id)
+    invitation = Invitation.where(invitee_id: self.id, event_id: event_id)
+    return true unless invitation.empty?
+    false
+  end
+
   def has_private_profile?
     private_profile
   end
@@ -53,9 +59,14 @@ class User < ActiveRecord::Base
   def is_owner?(requester)
     self === requester
   end
-
+  
+  # TODO: is this being used?
   def is_follower_or_owner?(resource)
     is_owner?(resource) or is_follower?(resource.id)  
+  end
+
+  def is_invited_or_owner?(resource)
+    is_owner?(resource.user) or is_invited?(resource.id)
   end
 
   protected
