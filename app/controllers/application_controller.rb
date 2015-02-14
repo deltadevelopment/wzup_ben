@@ -76,6 +76,10 @@ class ApplicationController < ActionController::API
     render json: {error: "Not authorized"}.to_json, status: 403
   end
 
+  def json_error(text, status)
+    render json: {error: text}.to_json, status: status
+  end
+
   def get_auth_token
     unless params[:auth_token].blank?
       return params[:auth_token]
