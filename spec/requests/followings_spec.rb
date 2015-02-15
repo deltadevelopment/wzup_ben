@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Followings", :type => :request do
 
-  describe "GET /user/:id/followers and followees", focus: true do
+  describe "GET /user/:id/followers and followees" do
     
     let(:following) { FactoryGirl.create(:following) }
     let(:user) { FactoryGirl.create(:user) }
@@ -106,6 +106,16 @@ RSpec.describe "Followings", :type => :request do
           expect(response.body).to be_json_eql(expected_response)
           expect(response).to have_http_status(200)
       end
+
+      it "should return 200 when deleting a relationship" do
+        
+        delete "user/#{following.user.id}/follow/#{following.followee.id}", nil, {'X-AUTH-TOKEN' => following.user.session.auth_token}
+
+        expect(response).to have_http_status(200)
+  
+
+      end
+
     end
 
     context "as a follower" do
