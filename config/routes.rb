@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       
       # Status routes
       
-      get 'status/:user_id' => 'statuses#show'
+      get 'user/:user_id/status' => 'statuses#show'
       
       put 'status/:user_id' => 'statuses#update'
       
