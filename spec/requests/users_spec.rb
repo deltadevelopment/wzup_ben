@@ -35,12 +35,13 @@ RSpec.describe "Users", :type => :request do
       }.to_json
     }
 
-    context "as a followee" do
+    context "as a follower" do
       context "user is private" do
         it "should return full json body" do
 
           # TODO: post call should be stubbed out
-          post "user/#{user1.id}/follow/#{user2.id}", nil, { 'X-AUTH-TOKEN' => user1.session.auth_token}
+          post "user/#{user2.id}/follow/#{user1.id}", nil, { 'X-AUTH-TOKEN' => user2.session.auth_token}
+          post "user/#{user1.id}/accept_following/#{user2.id}", nil, { 'X-AUTH-TOKEN' => user1.session.auth_token }
           # There is an issue here, is this because the relationship is not being confirmed? - Christian
           get "user/#{user1.id}", nil, { 'X-AUTH-TOKEN' => user2.session.auth_token }
 
@@ -140,6 +141,7 @@ RSpec.describe "Users", :type => :request do
   describe "DELETE user/:id" do
     
     let(:user) { FactoryGirl.create(:user) }
+    let(:user2) { FactoryGirl.create(:user) }
     
     it "should delete user with valid session" do
       delete "user/#{user.id}", nil, {'X-AUTH-TOKEN' => user.session.auth_token }
@@ -148,6 +150,11 @@ RSpec.describe "Users", :type => :request do
 
     it "should not delete user with invalid session" do
       delete "user/#{user.id}", nil, {'X-AUTH-TOKEN' => user.session.auth_token + '1'}
+      expect(response).to have_http_status(403)
+    end
+
+    it "should not delete other accounts than your own" do
+      delete "user/#{user.id}", nil, {'X-AUTH-TOKEN' => user2.session.auth_token}
       expect(response).to have_http_status(403)
     end
   end

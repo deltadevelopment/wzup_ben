@@ -29,14 +29,16 @@ class FollowingsController < ApplicationController
   end
 
   def destroy
-    return not_authorized unless confirm_owner(params[:id])
+    following = Following.find_by_user_id_and_followee_id(params[:id], params[:followee_id])
+
+    return not_authorized unless confirm_owner(following)
     
-    if Following.find_by_user_id_and_followee_id(params[:id], params[:followee_id]).destroy
+    if following.destroy
       resource_destroyed      
     else
-      # TODO: Log this?
       internal_server_error
     end
+
   end
 
   def get_followers

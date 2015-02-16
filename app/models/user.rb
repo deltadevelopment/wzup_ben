@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :followings
   has_many :followers, through: :followings, source: :followee, foreign_key: 'followee_id'
 
+  has_many :events
+
   before_save :encrypt_password
 
   validates :username, length: { in: 1..15, message: "must be between 1 and 15 characters" }
@@ -44,6 +46,12 @@ class User < ActiveRecord::Base
     false
   end
 
+  def is_invited?(event_id)
+    invitation = Invitation.where(invitee_id: self.id, event_id: event_id)
+    return true unless invitation.empty?
+    false
+  end
+
   def has_private_profile?
     private_profile
   end
@@ -51,9 +59,14 @@ class User < ActiveRecord::Base
   def is_owner?(requester)
     self === requester
   end
-
+  
+  # TODO: is this being used?
   def is_follower_or_owner?(resource)
     is_owner?(resource) or is_follower?(resource.id)  
+  end
+
+  def is_invited_or_owner?(resource)
+    is_owner?(resource.user) or is_invited?(resource.id)
   end
 
   protected
