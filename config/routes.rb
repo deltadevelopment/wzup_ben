@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   #namespace :api do  
   #  namespace :v1 do
   #
+      
+
+      # Feed Routes
+      get 'feed' => 'feed#list' 
+
       # Session Routes
 
       post 'login' => 'sessions#create'
