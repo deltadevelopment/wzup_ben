@@ -29,9 +29,32 @@ Rails.application.routes.draw do
       
       # Status routes
       
-      get 'status/:user_id' => 'statuses#show'
+      get 'user/:user_id/status' => 'statuses#show'
       
       put 'status/:user_id' => 'statuses#update'
+      
+      # Event routes
+      
+      get 'event/:id' => 'events#show'
+
+      post 'event' => 'events#create'
+
+      put 'event/:id' => 'events#update'  
+
+      delete 'event/:id' => 'events#destroy'  
+
+      # Event Invitation routes
+
+      get 'event/:event_id/invitations' => 'invitations#list'
+
+      post 'event/:event_id/invite/:invitee_id' => 'invitations#create'
+
+      get 'invitation/:id' => 'invitations#show'
+
+      put 'event/:event_id/invite/:invitee_id' => 'invitations#update'
+
+      delete 'invitation/:id' => 'invitations#destroy'
+
   #  end
   #end
 

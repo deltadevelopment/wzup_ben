@@ -20,7 +20,7 @@ class ApplicationController < ActionController::API
   # TODO: Not currentl being used, might need to be rewritten
   def confirm_owner(resource)
     if current_user 
-      current_user == resource.user 
+      return current_user == resource.user 
     end
 
     false
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::API
   end
 
   def request_created
-    render json: {success: "Request created"}, status: 200
+    render json: {success: "Request created"}, status: 201
   end
   
   def invalid_token 
