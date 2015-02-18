@@ -4,6 +4,18 @@ class ApplicationController < ActionController::API
 
   serialization_scope :current_user
 
+  # For logging
+  around_filter :global_request_logging
+
+  def global_request_logging 
+    logger.info "Content-Type: #{request.headers['CONTENT_TYPE']}"
+    begin 
+      yield 
+    ensure 
+      logger.info "response_status: #{response.status}"
+    end 
+  end 
+
   # Authorization
 
   def check_session
