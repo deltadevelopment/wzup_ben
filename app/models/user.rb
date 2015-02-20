@@ -18,8 +18,6 @@ class User < ActiveRecord::Base
 
   validates :display_name, length: { in: 4..25, message: "must be between 4 and 25 characters" }, if: :display_name_entered
   
-  validates :password, length: { in: 6..20, message: "must be between 6 and 20 characters" }, on: :create
-  
   # This is for other actions than on: :create 
   # TODO: This might be redundant
   validates :password, length: { in: 6..20, message: "must be between 6 and 20 characters" }, if: :password_entered
