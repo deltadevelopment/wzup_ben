@@ -16,6 +16,9 @@ gem 'pg'
 # Heroku specific
 gem 'rails_12factor', group: :production
 
+# Database dump/load
+gem 'yaml_db'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
