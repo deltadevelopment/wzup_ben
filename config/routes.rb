@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
       get 'user/:id' => 'users#show'
 
-      post 'user/register' => 'users#create'
+      post 'register' => 'users#create'
 
       put 'user/:id' => 'users#update'
 
