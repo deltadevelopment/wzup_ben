@@ -13,6 +13,12 @@ class UsersController < ApplicationController
     status = StatusesController.new
 
     if user.save
+      session = Session.new
+      session.generate_token(user.id)
+      session.save
+
+      user.auth_token = session.auth_token
+      
       if status.create(user.id)
         render json: {success: "Resource created", user: remove_unsafe_keys(user) }.to_json, status: 201
       else
@@ -71,7 +77,7 @@ class UsersController < ApplicationController
   
 
   def remove_unsafe_keys(user)
-    user.slice('id', 'display_name', 'username', 'email', 'phone_number')
+    user.slice('id', 'display_name', 'username', 'email', 'phone_number', 'auth_token')
   end
 
   def register_params 

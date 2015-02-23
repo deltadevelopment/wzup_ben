@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
   
   # To be able to use password field on registration
-  attr_accessor :password
+  # Auth_token is only required to pass auth_token to newly
+  # registered users
+  attr_accessor :password, :auth_token
 
   has_one :status
   has_one :session
