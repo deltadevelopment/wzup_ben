@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150214125401) do
+ActiveRecord::Schema.define(version: 20150224184235) do
 
   create_table "events", force: true do |t|
     t.string   "title"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20150214125401) do
     t.string   "email"
     t.integer  "phone_number"
     t.string   "display_name"
-    t.integer  "availability"
+    t.integer  "availability",    default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_hash"
