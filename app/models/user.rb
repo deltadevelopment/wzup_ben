@@ -15,10 +15,12 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
 
-  validates :username, length: { in: 1..15, message: "must be between 1 and 15 characters" }
+  validates :username, length: { in: 1..20, message: "must be between 1 and 15 characters" }
   validates :username, uniqueness: true
+  validates_format_of :username, :with => /[a-z0-9]+/i, :message => "can only contain letters and numbers"
 
   validates :display_name, length: { in: 4..25, message: "must be between 4 and 25 characters" }, if: :display_name_entered
+  validates_format_of :display_name, :with => /[a-z0-9 ]+/i, :message => "can only contain letters and numbers", if: :display_name_entered
   
   # This is for other actions than on: :create 
   # TODO: This might be redundant
