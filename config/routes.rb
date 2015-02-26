@@ -60,6 +60,13 @@ Rails.application.routes.draw do
 
       delete 'invitation/:id' => 'invitations#destroy'
 
+      # Media Routes
+
+      post 'status/:status_id/media' => 'media#create'
+      
+
+
+
   #  end
   #end
 

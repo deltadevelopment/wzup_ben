@@ -1,5 +1,5 @@
 class StatusSerializer < ActiveModel::Serializer
-  attributes :id, :body, :location, :user_id
+  attributes :id, :body, :location, :user_id, :has_media, :media
 
   has_one :user
 
@@ -9,6 +9,10 @@ class StatusSerializer < ActiveModel::Serializer
     else
       keys - [:body, :location, :availability]
     end
+  end
+
+  def media
+    object.media if object.has_media
   end
 
   def owner_or_follower

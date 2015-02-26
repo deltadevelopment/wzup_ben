@@ -66,6 +66,10 @@ class ApplicationController < ActionController::API
       render json: {error: "Internal server error"}.to_json, status: 500
   end 
 
+  def bad_request
+      render json: {error: "Bad request"}.to_json, status: 400
+  end
+
   # Renders not found json, and sets status to 404
   def record_not_found
     render json: {error: "Record not found"}.to_json, status: 404

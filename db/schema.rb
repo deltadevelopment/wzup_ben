@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150224184235) do
+ActiveRecord::Schema.define(version: 20150226155911) do
 
   create_table "events", force: true do |t|
     t.string   "title"
@@ -49,6 +49,14 @@ ActiveRecord::Schema.define(version: 20150224184235) do
     t.datetime "updated_at"
   end
 
+  create_table "media", force: true do |t|
+    t.string   "name"
+    t.integer  "media_type"
+    t.integer  "status_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sessions", force: true do |t|
     t.string   "auth_token"
     t.integer  "user_id"
@@ -62,6 +70,7 @@ ActiveRecord::Schema.define(version: 20150224184235) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_media",  default: false
   end
 
   create_table "users", force: true do |t|
