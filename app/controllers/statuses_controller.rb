@@ -52,7 +52,7 @@ class StatusesController < ApplicationController
     obj = s3.bucket(ENV['S3_BUCKET']).object(key)
     url = URI::parse(obj.presigned_url(:put))
 
-    res = { :url => url.to_s }.to_json
+    res = { :url => url.to_s, :key => key }.to_json
 
     render json: res, status: 200
 
