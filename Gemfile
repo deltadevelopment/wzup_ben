@@ -20,7 +20,7 @@ gem 'rails_12factor', group: :production
 gem 'yaml_db'
 
 # AWS SDK
-gem 'aws-sdk'
+gem 'aws-sdk', '~> 2'
 
 group :development, :test do
   gem 'sqlite3'
