@@ -44,6 +44,20 @@ class StatusesController < ApplicationController
 
   end
 
+  def generate_upload_url
+
+    s3 = Aws::S3::Resource.new
+    key = SecureRandom::hex(40)
+    
+    obj = s3.bucket(ENV['S3_BUCKET']).object(key)
+    url = URI::parse(obj.presigned_url(:put))
+
+    res = { :url => url.to_s }.to_json
+
+    render json: res, status: 200
+
+  end
+
   private
 
   def update_params

@@ -37,6 +37,8 @@ Rails.application.routes.draw do
       get 'user/:user_id/status' => 'statuses#show'
       
       put 'status/:user_id' => 'statuses#update'
+
+      get 'status/generate_upload_url' => 'statuses#generate_upload_url'
       
       # Event routes
       
@@ -60,9 +62,6 @@ Rails.application.routes.draw do
 
       delete 'invitation/:id' => 'invitations#destroy'
 
-      # Media Routes
-
-      post 'status/:status_id/media' => 'media#create'
       
 
 
