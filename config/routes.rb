@@ -39,6 +39,10 @@ Rails.application.routes.draw do
       put 'user/:user_id/status' => 'statuses#update'
 
       get 'status/generate_upload_url' => 'statuses#generate_upload_url'
+
+      # Status media routes
+     
+      post 'user/:user_id/status/add_media' => 'statuses#add_media'
       
       # Event routes
       

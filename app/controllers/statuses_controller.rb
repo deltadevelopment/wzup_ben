@@ -44,6 +44,23 @@ class StatusesController < ApplicationController
 
   end
 
+  def add_media
+    status = Status.find_by(:user_id => params[:user_id]) 
+
+    return not_authorized unless current_user == status.user 
+
+    if !status
+      record_not_found
+    else
+      if status.update_attributes(add_media_params)
+        render json: {'success' => 'Resource created'}.to_json, status: 200
+      else
+        check_errors_or_500(status)
+      end
+    end
+
+  end
+
   def generate_upload_url
 
     s3 = Aws::S3::Resource.new
@@ -62,6 +79,10 @@ class StatusesController < ApplicationController
 
   def update_params
     params.require(:status).permit(:body, :location)
+  end
+
+  def add_media_params
+    params.require(:status).permit(:media_key, :media_type)
   end
 
 end
