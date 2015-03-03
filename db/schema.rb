@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302174618) do
+ActiveRecord::Schema.define(version: 20150303131553) do
 
   create_table "events", force: true do |t|
     t.string   "title"
@@ -62,7 +62,8 @@ ActiveRecord::Schema.define(version: 20150302174618) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "has_media",  default: false
+    t.string   "media_key"
+    t.integer  "media_type", default: 0
   end
 
   create_table "users", force: true do |t|
