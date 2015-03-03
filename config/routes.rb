@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       
       get 'user/:user_id/status' => 'statuses#show'
       
-      put 'status/:user_id' => 'statuses#update'
+      put 'user/:user_id/status' => 'statuses#update'
 
       get 'status/generate_upload_url' => 'statuses#generate_upload_url'
       
