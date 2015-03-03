@@ -1,5 +1,5 @@
 class StatusSerializer < ActiveModel::Serializer
-  attributes :id, :body, :location, :user_id
+  attributes :id, :body, :location, :user_id, :media_key, :media_type, :media_url
 
   has_one :user
 
