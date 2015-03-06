@@ -10,13 +10,7 @@ class FeedController < ApplicationController
 
     statuses = Status.where("user_id IN (?)", followee_ids)
 
-    statuses.each do |s|
-      
-      if s.media_type != 0
-        obj = Aws::S3::Object.new(bucket_name: ENV['S3_BUCKET'], key: s.media_key)
-        s.media_url = obj.presigned_url(:get, expires_in: 3600)
-      end
-    end
+    statuses.each { |s| s.generate_download_uri }
 
     render json: statuses
 
