@@ -63,7 +63,7 @@ class StatusesController < ApplicationController
 
   end
 
-  def generate_upload_uri
+  def generate_upload_url
 
     s3 = Aws::S3::Resource.new
     key = SecureRandom::hex(40)
