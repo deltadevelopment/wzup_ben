@@ -11,20 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303131553) do
-
-  create_table "events", force: true do |t|
-    t.string   "title"
-    t.string   "description"
-    t.string   "place"
-    t.string   "location"
-    t.datetime "time"
-    t.boolean  "private",     default: true
-    t.integer  "degrees"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20150309134908) do
 
   create_table "following_requests", force: true do |t|
     t.integer  "user_id"
@@ -77,6 +64,19 @@ ActiveRecord::Schema.define(version: 20150303131553) do
     t.string   "password_hash"
     t.string   "password_salt"
     t.boolean  "private_profile", default: true
+  end
+
+  create_table "waves", force: true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "place"
+    t.string   "location"
+    t.datetime "time"
+    t.boolean  "private",     default: true
+    t.integer  "degrees"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

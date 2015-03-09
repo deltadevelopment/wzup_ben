@@ -46,13 +46,13 @@ Rails.application.routes.draw do
       
       # Event routes
       
-      get 'event/:id' => 'events#show'
+      get 'wave/:id' => 'waves#show'
 
-      post 'event' => 'events#create'
+      post 'wave' => 'waves#create'
 
-      put 'event/:id' => 'events#update'  
+      put 'wave/:id' => 'waves#update'  
 
-      delete 'event/:id' => 'events#destroy'  
+      delete 'wave/:id' => 'waves#destroy'  
 
       # Event Invitation routes
 

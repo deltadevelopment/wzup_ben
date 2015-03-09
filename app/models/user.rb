@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :followings
   has_many :followers, through: :followings, source: :followee, foreign_key: 'followee_id'
 
-  has_many :events
+  has_many :waves
 
   before_save :encrypt_password
 
