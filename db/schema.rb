@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309134908) do
+ActiveRecord::Schema.define(version: 20150310173703) do
 
   create_table "following_requests", force: true do |t|
     t.integer  "user_id"
