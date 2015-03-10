@@ -4,6 +4,8 @@ class UsersController < ApplicationController
  
   def show
     user = User.find(params[:id])
+
+    user.is_followee = current_user.is_follower?(user.id)
     
     render json: user
   end

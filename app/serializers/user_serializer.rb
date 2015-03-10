@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer 
-  attributes :id, :username, :private_profile, :display_name, :email, :availability, :phone_number
+ attributes :id, :username, :private_profile, :display_name, :email, :availability, :phone_number, :is_followee
   
   # TODO: Should the status be included with the JSON for the user?
   # has_one :status
