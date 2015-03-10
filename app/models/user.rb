@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
   has_one :status
   has_one :session
   
-  has_many :followings
-  has_many :followers, through: :followings, source: :followee, foreign_key: 'followee_id'
+  has_many :followings, dependent: :destroy
+  has_many :followers, through: :followings, source: :followee, foreign_key: 'followee_id', dependent: :destroy
 
   has_many :waves
 
