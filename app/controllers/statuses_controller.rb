@@ -7,7 +7,7 @@ class StatusesController < ApplicationController
     # TODO: Check if the user is authenticated to view the status
     status = Status.find_by(:user_id => params[:user_id])
 
-    status.generate_download_uri
+    status.generate_download_uri unless status.media_key.nil?
 
     if !status
       record_not_found
@@ -75,11 +75,6 @@ class StatusesController < ApplicationController
 
     render json: res, status: 200
 
-  end
-
-  def generate_download_uri
-    obj = Aws::S3::Object.new(bucket_name: ENV['S3_BUCKET'], key: self.media_key)
-    self.media_url = obj.presigned_url(:get, expires_in: 3600)
   end
 
   private
