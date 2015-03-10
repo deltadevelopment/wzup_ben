@@ -10,7 +10,7 @@ class FeedController < ApplicationController
 
     statuses = Status.where("user_id IN (?)", followee_ids)
 
-    statuses.each { |s| s.generate_download_uri }
+    statuses.each { |s| s.generate_download_uri unless s.media_key.nil? }
 
     render json: statuses
 
