@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310173703) do
+ActiveRecord::Schema.define(version: 20150311155740) do
 
   create_table "following_requests", force: true do |t|
     t.integer  "user_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20150310173703) do
     t.datetime "updated_at"
     t.string   "password_hash"
     t.string   "password_salt"
-    t.boolean  "private_profile", default: true
+    t.boolean  "private_profile", default: false
   end
 
   create_table "waves", force: true do |t|
