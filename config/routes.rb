@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       post 'login' => 'sessions#create'
       delete 'login' => 'sessions#destroy'
 
-      # User + Following routes
+      # User
 
       get 'user/:id' => 'users#show'
 
@@ -25,13 +25,22 @@ Rails.application.routes.draw do
 
       delete 'user/:id' => 'users#destroy' 
 
+      # Following routes
+
       get 'user/:id/followers' => 'followings#get_followers'
       get 'user/:id/followees' => 'followings#get_followees'
 
       post 'user/:id/follow/:followee_id' => 'followings#create_or_request'      
       delete 'user/:id/follow/:followee_id' => 'followings#destroy'      
       post 'user/:id/accept_following/:follower_id' => 'followings#accept_following'
+
+      # Subscriber Routes
       
+      get 'user/:id/get_subscribees' => 'subscribers#get_subscribees'
+
+      post 'user/:id/subscribe/:subscribee_id' => 'subscribers#create'      
+      delete 'user/:id/subscribe/:subscribee_id' => 'subscribers#destroy'      
+
       # Status routes
       
       get 'user/:user_id/status' => 'statuses#show'
