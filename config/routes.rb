@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       post 'user/:id/follow/:followee_id' => 'followings#create_or_request'      
       delete 'user/:id/follow/:followee_id' => 'followings#destroy'      
       post 'user/:id/accept_following/:follower_id' => 'followings#accept_following'
+
+      get 'user/:id/following_requests' => 'followings#get_following_requests'
       
       # Status routes
       

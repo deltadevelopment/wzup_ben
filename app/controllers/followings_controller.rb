@@ -70,6 +70,18 @@ class FollowingsController < ApplicationController
     render json: following, status: 200, each_serializer: FolloweeSerializer, meta: { total: following.size }
   end
 
+  def get_following_requests
+    requests = FollowingRequest.where(followee_id: params[:id])
+
+    return record_not_found if requests.empty?
+
+    user = requests[0].followee
+
+    return not_authorized unless current_user == user
+
+    render json: requests, status: 200, each_serializer: FolloweeSerializer, meta: { total: requests.size }
+  end
+
   private
 
   def create(user_id, followee_id, following_request=nil)
