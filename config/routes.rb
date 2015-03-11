@@ -36,10 +36,10 @@ Rails.application.routes.draw do
 
       # Subscriber Routes
       
-      get 'user/:id/get_subscribees' => 'subscribers#get_subscribees'
+      get 'user/:id/get_subscribees' => 'subscriptions#get_subscribees'
 
-      post 'user/:id/subscribe/:subscribee_id' => 'subscribers#create'      
-      delete 'user/:id/subscribe/:subscribee_id' => 'subscribers#destroy'      
+      post 'user/:id/subscribe/:subscribee_id' => 'subscriptions#create'      
+      delete 'user/:id/subscribe/:subscribee_id' => 'subscriptions#destroy'      
 
       # Status routes
       
