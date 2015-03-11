@@ -36,8 +36,13 @@ ActiveRecord::Schema.define(version: 20150311160736) do
     t.datetime "updated_at"
   end
 
-# Could not dump table "sessions" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "sessions", force: true do |t|
+    t.string   "auth_token"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "device_id"
+  end
 
   create_table "statuses", force: true do |t|
     t.string   "body"
