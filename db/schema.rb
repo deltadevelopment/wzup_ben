@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311155740) do
+ActiveRecord::Schema.define(version: 20150311160736) do
 
   create_table "following_requests", force: true do |t|
     t.integer  "user_id"
@@ -36,12 +36,8 @@ ActiveRecord::Schema.define(version: 20150311155740) do
     t.datetime "updated_at"
   end
 
-  create_table "sessions", force: true do |t|
-    t.string   "auth_token"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "sessions" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "statuses", force: true do |t|
     t.string   "body"

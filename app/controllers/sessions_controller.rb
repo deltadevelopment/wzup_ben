@@ -8,8 +8,9 @@ class SessionsController < ApplicationController
     if user
       session = Session.new
       session.generate_token(user.id)
+      session.device_id = params[:device_id]
       
-      if user.session && user.session.update_attributes(auth_token: session.auth_token) || session.save
+      if session.save
         render json: {success: "User was logged in", user_id: session.user_id, auth_token: session.auth_token}.to_json, status: 200
       else
         # TODO: Log this
