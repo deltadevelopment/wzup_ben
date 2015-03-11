@@ -8,6 +8,7 @@ class FollowerSerializer < ActiveModel::Serializer
       data[:id] = object.id
       data[:user] = {'id' => object.user.id, 
                      'username' => object.user.username,
+                     'display_name' => object.user.display_name,
                      'is_followee' => object.user.is_followee
                     }
     end
