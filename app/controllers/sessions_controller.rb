@@ -6,10 +6,10 @@ class SessionsController < ApplicationController
     user = UsersController.authenticate(params[:username], params[:password])
 
     if user
-      session = Session.new
+      session = Session.find_by_user_id(user.id) || Session.new(user_id: user.id)
       session.generate_token(user.id)
       session.device_id = params[:device_id]
-      
+
       if session.save
         render json: {success: "User was logged in", user_id: session.user_id, auth_token: session.auth_token}.to_json, status: 200
       else
