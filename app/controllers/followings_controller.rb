@@ -2,8 +2,8 @@ class FollowingsController < ApplicationController
   before_filter :check_session
 
   def create_or_request
-    user = User.find_by_id(params[:id])
-    followee = User.find_by_id(params[:followee_id])
+    user = User.find_by_id!(params[:id])
+    followee = User.find_by_id!(params[:followee_id])
 
     return not_authorized unless current_user == user
 
@@ -16,8 +16,8 @@ class FollowingsController < ApplicationController
   end
 
   def accept_following
-    user = User.find_by_id(params[:id])
-    follower = User.find_by_id(params[:follower_id])
+    user = User.find_by_id!(params[:id])
+    follower = User.find_by_id!(params[:follower_id])
     following_request = FollowingRequest.where(user_id: follower.id, followee_id: user.id)
     return not_authorized unless current_user == user
     
@@ -29,7 +29,7 @@ class FollowingsController < ApplicationController
   end
 
   def destroy
-    following = Following.find_by_user_id_and_followee_id(params[:id], params[:followee_id])
+    following = Following.find_by_user_id_and_followee_id!(params[:id], params[:followee_id])
 
     return not_authorized unless confirm_owner(following)
     
