@@ -2,8 +2,8 @@ class SubscriptionsController < ApplicationController
   before_filter :check_session
 
   def create
-    user = User.find_by_id(params[:id])
-    subscribee = User.find_by_id(params[:subscribee_id])
+    user = User.find_by_id!(params[:id])
+    subscribee = User.find_by_id!(params[:subscribee_id])
 
     return not_authorized unless current_user == user
 
@@ -18,7 +18,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    subscription = Subscription.find_by_user_id_and_subscribee_id(params[:id], params[:subscribee_id])
+    subscription = Subscription.find_by_user_id_and_subscribee_id!(params[:id], params[:subscribee_id])
 
     return not_authorized unless confirm_owner(subscription)
     
@@ -31,15 +31,13 @@ class SubscriptionsController < ApplicationController
   end
 
   def get_subscribees
+    return not_authorized unless current_user.id == params[:id]
+
     subscription = Subscription.where(user_id: params[:id])
 
     return record_not_found if subscription.empty?
 
-    user = subscription[0].user
-
-    return not_authorized unless current_user == user 
-
-    render json: subscription, status: 200, each_serializer: FolloweeSerializer, meta: { total: subscription.size }
+    render json: subscription, status: 200, each_serializer: SubscriptionSerializer, meta: { total: subscription.size }
   end
 
 end
