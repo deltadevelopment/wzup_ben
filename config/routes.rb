@@ -36,7 +36,8 @@ Rails.application.routes.draw do
 
       post 'user/:id/accept_following/:follower_id' => 'followings#accept_following'
 
-      get 'user/:id/following_requests' => 'followings#get_following_requests'
+      get 'user/:id/follower_requests' => 'followings#get_follower_requests'
+      get 'user/:id/followee_requests' => 'followings#get_followee_requests'
 
       # Subscriber Routes
       

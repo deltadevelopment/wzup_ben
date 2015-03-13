@@ -1,4 +1,4 @@
-class FollowingRequestSerializer < ActiveModel::Serializer
+class FollowerRequestSerializer < ActiveModel::Serializer
   attributes :id
 
 
@@ -9,7 +9,8 @@ class FollowingRequestSerializer < ActiveModel::Serializer
       data[:id] = object.id
       data[:user] = {'id' => object.user.id, 
                      'username' => object.user.username,
-                     'display_name' => object.user.display_name
+                     'display_name' => object.user.display_name,
+                     'private_profile' => object.user.private_profile
                     }
     end
 

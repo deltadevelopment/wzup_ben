@@ -69,7 +69,8 @@ class FollowingsController < ApplicationController
     render json: following, status: 200, each_serializer: FolloweeSerializer, meta: { total: following.size }
   end
 
-  def get_following_requests
+  # These are the ones that have requested to follow you
+  def get_follower_requests
     requests = FollowingRequest.where(followee_id: params[:id])
 
     return record_not_found if requests.empty?
@@ -78,7 +79,20 @@ class FollowingsController < ApplicationController
 
     return not_authorized unless current_user == user
 
-    render json: requests, status: 200, each_serializer: FollowingRequestSerializer, meta: { total: requests.size }
+    render json: requests, status: 200, each_serializer: FollowerRequestSerializer, meta: { total: requests.size }
+  end
+
+  # These are the ones that you have requested to follow
+  def get_followee_requests
+    requests = FollowingRequest.where(user_id: params[:id])
+
+    return record_not_found if requests.empty?
+
+    user = requests[0].user
+
+    return not_authorized unless current_user == user
+
+    render json: requests, status: 200, each_serializer: FolloweeRequestSerializer, meta: { total: requests.size }
   end
 
   private
