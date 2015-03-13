@@ -8,8 +8,11 @@ class FollowingsController < ApplicationController
     return not_authorized unless current_user == user
 
     if followee.has_private_profile? 
-      FollowingRequest.find_or_create_by(user_id: user.id, followee_id: followee.id)
-      request_created
+      if FollowingRequest.find_or_create_by(user_id: user.id, followee_id: followee.id)
+        request_created 
+      else
+        resource_could_not_be_created   
+      end
     else
       create(user.id, followee.id)
     end
@@ -79,7 +82,7 @@ class FollowingsController < ApplicationController
 
     return not_authorized unless current_user == user
 
-    render json: requests, status: 200, each_serializer: FolloweeSerializer, meta: { total: requests.size }
+    render json: requests, status: 200, each_serializer: FollowingRequestSerializer, meta: { total: requests.size }
   end
 
   private
