@@ -21,14 +21,10 @@ class FollowingsController < ApplicationController
   def accept_following
     user = User.find_by_id!(params[:id])
     follower = User.find_by_id!(params[:follower_id])
-    following_request = FollowingRequest.where(user_id: follower.id, followee_id: user.id)
+    following_request = FollowingRequest.find_by_user_id_and_followee_id!(follower.id, user.id)
     return not_authorized unless current_user == user
     
-    if following_request.exists?
-      create(follower.id, user.id, following_request)
-    else
-      record_not_found
-    end
+    create(follower.id, user.id, following_request)
   end
 
   def destroy
@@ -90,11 +86,13 @@ class FollowingsController < ApplicationController
   def create(user_id, followee_id, following_request=nil)
     if Following.find_or_create_by(user_id: user_id, followee_id: followee_id) 
 
-      if following_request == FollowingRequest.new
+      unless following_request.nil?
         following_request.destroy
+    
+        resource_created        
+      else
+        internal_server_error
       end 
-
-      resource_created        
     else
       resource_could_not_be_created
     end
