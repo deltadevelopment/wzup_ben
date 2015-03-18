@@ -15,6 +15,7 @@ gem 'pg'
 
 # Heroku specific
 gem 'rails_12factor', group: :production
+gem 'rails_stdout_logging'
 
 # Database dump/load
 gem 'yaml_db'
