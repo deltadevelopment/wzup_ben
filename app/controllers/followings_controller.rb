@@ -99,14 +99,9 @@ class FollowingsController < ApplicationController
 
   def create(user_id, followee_id, following_request=nil)
     if Following.find_or_create_by(user_id: user_id, followee_id: followee_id) 
-
-      unless following_request.nil?
-        following_request.destroy
-    
-        resource_created        
-      else
-        internal_server_error
-      end 
+      following_request.destroy unless following_request.nil?
+      
+      resource_created        
     else
       resource_could_not_be_created
     end
