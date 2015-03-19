@@ -10,6 +10,23 @@ class SessionsController < ApplicationController
       session.generate_token(user.id)
       session.device_id = params[:device_id]
 
+      if params[:device_type] == 'ios'
+        session.device_type = :ios
+        arn = Rails.application.secrets.aws_sns_ios_arn
+      elsif params[:device_type] == 'android'
+        session.device_type = :android
+      end
+      
+      unless arn == nil or params[:device_id] == nil
+        sns = Aws::SNS::Client.new
+        res = sns.create_platform_endpoint(platform_application_arn: arn, 
+                                     token: params[:device_id],
+                                     custom_user_data: user.id.to_s)
+
+        User.find(user.id).update_attributes(sns_endpoint_arn: res[:endpoint_arn])
+      end
+      
+
       if session.save
         render json: {success: "User was logged in", user_id: session.user_id, auth_token: session.auth_token}.to_json, status: 200
       else

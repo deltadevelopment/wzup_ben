@@ -1,5 +1,7 @@
 class Session < ActiveRecord::Base
   belongs_to :user
+
+  enum device_type: [:ios, :android]
   
   # TODO: Optimization: This is currently being checked both in #generate token, and here.
   validates :auth_token, uniqueness: true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311160736) do
+ActiveRecord::Schema.define(version: 20150319140417) do
 
   create_table "following_requests", force: true do |t|
     t.integer  "user_id"
@@ -27,21 +27,13 @@ ActiveRecord::Schema.define(version: 20150311160736) do
     t.datetime "updated_at"
   end
 
-  create_table "invitations", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "event_id"
-    t.integer  "invitee_id"
-    t.integer  "attending",  default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "sessions", force: true do |t|
     t.string   "auth_token"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "device_id"
+    t.integer  "device_type"
   end
 
   create_table "statuses", force: true do |t|
@@ -54,17 +46,34 @@ ActiveRecord::Schema.define(version: 20150311160736) do
     t.integer  "media_type", default: 0
   end
 
+  create_table "subscriptions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "subscribee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "wave_id"
+    t.integer  "taggee_id"
+    t.integer  "attending",  default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "username"
     t.string   "email"
     t.integer  "phone_number"
     t.string   "display_name"
-    t.integer  "availability",    default: 0
+    t.integer  "availability",     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_hash"
     t.string   "password_salt"
-    t.boolean  "private_profile", default: false
+    t.boolean  "private_profile",  default: false
+    t.string   "sns_endpoint_arn"
   end
 
   create_table "waves", force: true do |t|
