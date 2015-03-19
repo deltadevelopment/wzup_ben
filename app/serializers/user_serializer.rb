@@ -7,7 +7,7 @@ class UserSerializer < ActiveModel::Serializer
   def filter(keys)
     if scope.is_owner?(object)
       keys
-    elsif scope.is_follower(object.id) or !object.has_private_profile?
+    elsif scope.is_follower?(object.id) or !object.has_private_profile?
       keys - [:phone_number, :email]
     else
       keys - [:availability, :display_name]
