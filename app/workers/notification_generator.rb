@@ -7,10 +7,12 @@ class NotificationGenerator
     case model
     when :status
       
-      subscriptions = Subscription.where(subscribee_id: object["user_id"])
+      user = User.find(object["user_id"])
+
+      subscriptions = Subscription.where(subscribee_id: user.id)
 
       subscriptions.each do |sub|
-        sub.user.notify('notified')
+        sub.user.notify("#{user.username} has updated his status.")
       end
 
     end 
