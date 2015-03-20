@@ -7,7 +7,6 @@ gem 'rails', '4.1.4'
 
 gem 'rails-api'
 
-gem 'resque'
 
 gem 'bcrypt' # For general encryption
 gem 'active_model_serializers', '~> 0.9.2' # For JSON generation
@@ -25,6 +24,8 @@ gem 'yaml_db'
 # AWS SDK
 gem 'aws-sdk', '~> 2'
 
+gem 'resque', :require => 'resque/server'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
@@ -35,6 +36,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'pry-remote'
   gem 'rubocop'
 end
 

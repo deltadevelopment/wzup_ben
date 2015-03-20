@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   #namespace :api do  
   #  namespace :v1 do
   #
-      
 
       # Feed Routes
       get 'feed' => 'feed#list' 
@@ -81,9 +80,9 @@ Rails.application.routes.draw do
 
       delete 'invitation/:id' => 'invitations#destroy'
 
-      
+      get 'jobs' => 'jobs#list'
 
-
+      mount Resque::Server, :at => "/resque" 
 
   #  end
   #end

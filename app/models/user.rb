@@ -35,6 +35,17 @@ class User < ActiveRecord::Base
             if: :phone_number_entered
 
 
+  def notify(message)
+    puts "getting called notify"
+    unless self.sns_endpoint_arn == nil
+      pen = Aws::SNS::Resource.new.platform_endpoint(self.sns_endpoint_arn)
+      pen.publish(message: message)
+      return
+    end
+    false
+  end
+
+
   # TODO: Should this be rewritten using .find and rescue AR?
   def is_follower?(followee_id)
     following = Following.where(user_id: self.id, followee_id: followee_id)

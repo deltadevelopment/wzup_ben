@@ -38,6 +38,7 @@ class StatusesController < ApplicationController
       record_not_found
     else
       if status.update_attributes(update_params)
+        Resque.enqueue(NotificationGenerator, {model: :status, user_id: params[:user_id]})
         render json: status, status: 200
       else
         check_errors_or_500(status)

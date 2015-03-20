@@ -11,21 +11,24 @@ class SessionsController < ApplicationController
       session.device_id = params[:device_id]
 
       if params[:device_type] == 'ios'
-        session.device_type = :ios
         arn = Rails.application.secrets.aws_sns_ios_arn
-      elsif params[:device_type] == 'android'
-        session.device_type = :android
       end
       
-      unless arn == nil or params[:device_id] == nil
-        sns = Aws::SNS::Client.new
-        res = sns.create_platform_endpoint(platform_application_arn: arn, 
-                                     token: params[:device_id],
-                                     custom_user_data: user.id.to_s)
+      unless arn == nil or session.device_id == nil
+        
+        update_token_params = { arn: arn, device_id: session.device_id, user_id: user.id }
 
-        User.find(user.id).update_attributes(sns_endpoint_arn: res[:endpoint_arn])
+        device_id_exists = Session.where(device_id: session.device_id).take
+
+        unless device_id_exists.nil?
+          Resque.enqueue(AddDeviceToken, update_token_params, device_id_exists.user.sns_endpoint_arn)
+          device_id_exists.user.update_attributes(sns_endpoint_arn: nil)
+          device_id_exists.destroy # Session#destroy
+        else
+          Resque.enqueue(AddDeviceToken, update_token_params)
+        end
+
       end
-      
 
       if session.save
         render json: {success: "User was logged in", user_id: session.user_id, auth_token: session.auth_token}.to_json, status: 200
@@ -33,7 +36,7 @@ class SessionsController < ApplicationController
         # TODO: Log this
         render json: {error: "Could not generate session token"}.to_json, status: 500
       end
-    else
+   else
       render json: {error: "Bad credentials"}.to_json, status: 401
     end
 
