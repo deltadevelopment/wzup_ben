@@ -10,6 +10,14 @@ class UsersController < ApplicationController
     render json: user
   end
 
+  def get_user_by_username
+    user = User.find(params[:username])
+
+    user.is_followee = current_user.is_follower?(user.id)
+    
+    render json: user
+  end
+
   def create
     user = User.new(register_params)
     status = StatusesController.new
