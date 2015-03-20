@@ -4,9 +4,10 @@ ruby '2.1.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
 
+# Handles secrets
+gem "figaro"
 
 gem 'rails-api'
-
 
 gem 'bcrypt' # For general encryption
 gem 'active_model_serializers', '~> 0.9.2' # For JSON generation
