@@ -36,11 +36,10 @@ class User < ActiveRecord::Base
 
 
   def notify(message)
-    puts "getting called notify"
     unless self.sns_endpoint_arn == nil
       pen = Aws::SNS::Resource.new.platform_endpoint(self.sns_endpoint_arn)
       pen.publish(message: message)
-      return
+      return true
     end
     false
   end
