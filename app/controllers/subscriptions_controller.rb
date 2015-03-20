@@ -7,7 +7,7 @@ class SubscriptionsController < ApplicationController
 
     return not_authorized unless current_user == user
 
-    return resource_not_created if subscribee.has_private_profile? and 
+    return resource_could_not_be_created if subscribee.has_private_profile? and 
                                    !subscribee.is_followee?(user)
 
     if Subscription.find_or_create_by(user_id: user.id, subscribee_id: subscribee.id) 
