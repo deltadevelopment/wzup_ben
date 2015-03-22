@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   
-  Resque.config do |config|
+  Resque.configure do |config|
     config.redis = ENV['REDISCLOUD_URL']
   end
 
