@@ -1,5 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  
+  Resque.config do |config|
+    config.redis = ENV['REDISCLOUD_URL')
+  end
+
 
   # Code is not reloaded between requests.
   config.cache_classes = true

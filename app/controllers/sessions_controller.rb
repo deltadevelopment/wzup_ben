@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       session.device_id = params[:device_id]
 
       if params[:device_type] == 'ios'
-        arn = ENV['AWS_SNS_IOS_ARN'] || Rails.secrets.aws_sns_ios_arn
+        arn = ENV['AWS_SNS_IOS_ARN'] || Rails.application.secrets.aws_sns_ios_arn
       end
       
       unless arn == nil or session.device_id == nil
