@@ -7,8 +7,9 @@ class SubscriptionsController < ApplicationController
 
     return not_authorized unless current_user == user
 
-    return resource_could_not_be_created if subscribee.has_private_profile? and 
-                                   !subscribee.is_followee?(user)
+    if subscribee.has_private_profile? and !subscribee.is_followee?(user)
+      render json: {"error": "You can not subscribe to private users you don't follow"}.to_json, status: 400
+    end
 
     if Subscription.find_or_create_by(user_id: user.id, subscribee_id: subscribee.id) 
       resource_created        
