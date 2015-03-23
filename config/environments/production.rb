@@ -1,7 +1,16 @@
+require 'resque'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   # Code is not reloaded between requests.
   config.cache_classes = true
+
+  Resque.configure do |config|
+    unless ENV['REDISCLOUD_URL'].nil?
+      config.redis = ENV['REDISCLOUD_URL']
+    end
+  end
+
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
