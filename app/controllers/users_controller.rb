@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def get_user_by_username
-    user = User.find(params[:username])
+    user = User.where(username: params[:username])
 
     user.is_followee = current_user.is_follower?(user.id)
     
