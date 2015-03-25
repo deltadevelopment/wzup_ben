@@ -4,7 +4,6 @@ ruby '2.2.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 
-gem 'newrelic_rpm'
 
 # Handles secrets
 gem "figaro"
@@ -16,6 +15,10 @@ gem 'active_model_serializers', '~> 0.9.2' # For JSON generation
 
 # Use sqlite3 as the database for Active Record
 gem 'pg'
+
+# Monitoring
+gem "bugsnag"
+gem 'newrelic_rpm'
 
 # Heroku specific
 gem 'rails_12factor', group: :production
