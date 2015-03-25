@@ -64,13 +64,10 @@ class FollowingsController < ApplicationController
 
     user = following[0].user
     
-    # Optimization: Don't run this when getting your own followees
-    unless current_user == user
-      followees = Following.where(user_id: current_user.id).pluck(:followee_id)
+    followees = Following.where(user_id: current_user.id).pluck(:followee_id)
 
-      following.each do |f|
-        f.followee.is_followee = followees.include?(f.followee.id)
-      end
+    following.each do |f|
+      f.followee.is_followee = followees.include?(f.followee.id)
     end
 
     return not_authorized unless current_user.is_follower_or_owner?(user) or !user.has_private_profile?
